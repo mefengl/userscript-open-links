@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.2
+// @version      0.0.3
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @include      *
@@ -70,7 +70,10 @@
 
   // Mouse down event
   document.addEventListener('mousedown', (e) => {
-    if (!zKeyPressed) return;
+    if (!zKeyPressed || e.buttons === 0) {
+      clearSelection();
+      return;
+    }
     e.preventDefault();  // Prevent text selection
     removeBordersFromLinks();
     startX = e.clientX;
@@ -83,7 +86,10 @@
 
   // Mouse move event
   document.addEventListener('mousemove', (e) => {
-    if (!zKeyPressed || !selectionRectangle) return;
+    if (!zKeyPressed || !selectionRectangle || e.buttons === 0) {
+      clearSelection();
+      return;
+    }
     e.preventDefault();  // Prevent text selection
     removeBordersFromLinks();
     selectionRectangle.style.left = Math.min(e.clientX, startX) + 'px';
@@ -101,13 +107,22 @@
 
   // Mouse up event
   document.addEventListener('mouseup', (e) => {
-    if (!zKeyPressed || !selectionRectangle) return;
+    if (!zKeyPressed || !selectionRectangle || e.buttons !== 0) {
+      clearSelection();
+      return;
+    }
     e.preventDefault();  // Prevent text selection
+    document.body.removeChild(selectionRectangle);
     let urlsToOpen = elementsInsideRectangle.map(el => el.href);
     openLinksInBackground(urlsToOpen);
-    document.body.removeChild(selectionRectangle);
-    removeBordersFromLinks();
-    selectionRectangle = null;
+    clearSelection();
   });
 
+  function clearSelection() {
+    if (selectionRectangle) {
+      document.body.removeChild(selectionRectangle);
+      selectionRectangle = null;
+    }
+    removeBordersFromLinks();
+  }
 })();
