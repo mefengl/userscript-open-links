@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.4
+// @version      0.0.5
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @match        *://*/*
-// @grant        GM.openInTab
+// @grant        GM_openInTab
 // ==/UserScript==
 
 (function () {
@@ -94,7 +94,7 @@
 
   function openLinksInBackground(urls) {
     urls.forEach((url) => {
-      GM.openInTab(url, true);
+      GM_openInTab(url, { active: false });
     });
   }
 
