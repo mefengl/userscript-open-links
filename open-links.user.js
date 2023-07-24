@@ -6,6 +6,7 @@
 // @author       mefengl
 // @match        *://*/*
 // @grant        GM_openInTab
+// @license      MIT
 // ==/UserScript==
 
 (function () {
