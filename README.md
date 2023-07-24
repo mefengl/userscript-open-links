@@ -14,10 +14,14 @@ Don't implement all features Linkclump has, Contributions welcome.
 ## Why I create it
 
 I created it because I needed it in Safari, and many other people need it too:
-> https://www.reddit.com/r/Safari/comments/88epf3/opening_multiple_links_at_once_on_safari
-> https://apple.stackexchange.com/questions/274569/open-many-links-at-once-in-safari
-> https://github.com/benblack86/linkclump/issues/99
-> https://github.com/benblack86/linkclump/issues/180
+
+https://www.reddit.com/r/Safari/comments/88epf3/opening_multiple_links_at_once_on_safari
+
+https://apple.stackexchange.com/questions/274569/open-many-links-at-once-in-safari
+
+https://github.com/benblack86/linkclump/issues/99
+
+https://github.com/benblack86/linkclump/issues/180
 
 ## Credits
 

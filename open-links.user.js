@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.1
+// @version      0.0.2
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @include      *
