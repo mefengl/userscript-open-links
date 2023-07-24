@@ -3,6 +3,7 @@
 Select links with Z key and open them in new tabs.
 
 > Simple reimplementation of the Chrome extension [Linkclump](https://github.com/benblack86/linkclump) as a userscript version
+> Due to content security policies, this userscript may not work on certain websites like GitHub.
 > If you use Chrome, original extension is recommended.
 
 ## How to use
