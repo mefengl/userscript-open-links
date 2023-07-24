@@ -4,7 +4,7 @@
 // @version      0.0.4
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
-// @include      *
+// @match        *://*/*
 // @grant        GM.openInTab
 // ==/UserScript==
 
