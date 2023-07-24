@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.3
+// @version      0.0.4
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @include      *
@@ -17,7 +17,6 @@
   let zKeyPressed = false;
   let startX, startY;
 
-  // Function to create the selection rectangle
   function createRectangle(x, y) {
     let div = document.createElement('div');
     div.style.border = '1px dashed red';
@@ -26,7 +25,6 @@
     return div;
   }
 
-  // Function to create the count label
   function createCountLabel() {
     let div = document.createElement('div');
     div.style.position = 'absolute';
@@ -36,45 +34,41 @@
     return div;
   }
 
-  // Function to detect <a> elements inside the rectangle
   function detectElementsInRectangle() {
     elementsInsideRectangle = Array.from(document.querySelectorAll('a')).filter(el => {
       let rect = el.getBoundingClientRect();
       return rect.top >= parseInt(selectionRectangle.style.top) && rect.left >= parseInt(selectionRectangle.style.left) && rect.bottom <= (parseInt(selectionRectangle.style.top) + parseInt(selectionRectangle.style.height)) && rect.right <= (parseInt(selectionRectangle.style.left) + parseInt(selectionRectangle.style.width));
     });
 
-    elementsInsideRectangle.forEach(el => el.style.border = '1px solid red');  // Add red border to <a> elements
+    elementsInsideRectangle.forEach(el => el.style.border = '1px solid red');
 
-    // Update the count label
     countLabel.innerText = elementsInsideRectangle.length;
   }
 
-  // Function to remove the border from <a> elements no longer inside the rectangle
   function removeBordersFromLinks() {
-    document.querySelectorAll('a').forEach(el => el.style.border = '');  // Remove border
+    document.querySelectorAll('a').forEach(el => el.style.border = '');
   }
 
-  // Key down event
   document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'z') {
       zKeyPressed = true;
     }
   });
 
-  // Key up event
+  // Clear selection and open links if 'z' is released before mouse
   document.addEventListener('keyup', (e) => {
     if (e.key.toLowerCase() === 'z') {
       zKeyPressed = false;
+      openLinksAndClear();
     }
   });
 
-  // Mouse down event
   document.addEventListener('mousedown', (e) => {
     if (!zKeyPressed || e.buttons === 0) {
       clearSelection();
       return;
     }
-    e.preventDefault();  // Prevent text selection
+    e.preventDefault();
     removeBordersFromLinks();
     startX = e.clientX;
     startY = e.clientY;
@@ -84,13 +78,12 @@
     selectionRectangle.appendChild(countLabel);
   });
 
-  // Mouse move event
   document.addEventListener('mousemove', (e) => {
     if (!zKeyPressed || !selectionRectangle || e.buttons === 0) {
       clearSelection();
       return;
     }
-    e.preventDefault();  // Prevent text selection
+    e.preventDefault();
     removeBordersFromLinks();
     selectionRectangle.style.left = Math.min(e.clientX, startX) + 'px';
     selectionRectangle.style.top = Math.min(e.clientY, startY) + 'px';
@@ -105,17 +98,14 @@
     });
   }
 
-  // Mouse up event
+  // Clear selection and open links if mouse is released before 'z'
   document.addEventListener('mouseup', (e) => {
     if (!zKeyPressed || !selectionRectangle || e.buttons !== 0) {
       clearSelection();
       return;
     }
-    e.preventDefault();  // Prevent text selection
-    document.body.removeChild(selectionRectangle);
-    let urlsToOpen = elementsInsideRectangle.map(el => el.href);
-    openLinksInBackground(urlsToOpen);
-    clearSelection();
+    e.preventDefault();
+    openLinksAndClear();
   });
 
   function clearSelection() {
@@ -124,5 +114,14 @@
       selectionRectangle = null;
     }
     removeBordersFromLinks();
+  }
+
+  // To open links and clear selection
+  function openLinksAndClear() {
+    if (selectionRectangle) {
+      let urlsToOpen = elementsInsideRectangle.map(el => el.href);
+      openLinksInBackground(urlsToOpen);
+      clearSelection();
+    }
   }
 })();
