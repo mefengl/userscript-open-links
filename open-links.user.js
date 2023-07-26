@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.5
+// @version      0.0.6
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @match        *://*/*
@@ -120,7 +120,7 @@
   // To open links and clear selection
   function openLinksAndClear() {
     if (selectionRectangle) {
-      let urlsToOpen = elementsInsideRectangle.map(el => el.href);
+      const urlsToOpen = [...new Set(elementsInsideRectangle.map(el => el.href))]
       openLinksInBackground(urlsToOpen);
       clearSelection();
     }
