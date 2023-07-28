@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         Open Links
 // @namespace    https://github.com/mefengl
-// @version      0.0.6
+// @version      1.0.3
 // @description  Select links with Z key and open them in new tabs
 // @author       mefengl
 // @match        *://*/*
 // @grant        GM_openInTab
 // @license      MIT
+// @updateURL    https://github.com/mefengl/userscript-open-links/raw/main/open-links.user.js
 // ==/UserScript==
 
 (function () {
@@ -50,19 +51,29 @@
     document.querySelectorAll('a').forEach(el => el.style.border = '');
   }
 
+  let mouseDown = false;
+  document.addEventListener('mousedown', () => {
+    mouseDown = true;
+  });
+  document.addEventListener('mouseup', () => {
+    mouseDown = false;
+  });
+
   document.addEventListener('keydown', (e) => {
-    if (e.key.toLowerCase() === 'z') {
+    if (e.key.toLowerCase() === 'z' && mouseDown) {
+      e.preventDefault();
+    } else if (e.key.toLowerCase() === 'z') {
       zKeyPressed = true;
     }
   });
 
-  // Clear selection and open links if 'z' is released before mouse
   document.addEventListener('keyup', (e) => {
     if (e.key.toLowerCase() === 'z') {
       zKeyPressed = false;
       openLinksAndClear();
     }
   });
+
 
   document.addEventListener('mousedown', (e) => {
     if (!zKeyPressed || e.buttons === 0) {
