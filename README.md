@@ -4,8 +4,6 @@ Select links with Z key and open them in new tabs.
 
 > Simple reimplementation of the Chrome extension [Linkclump](https://github.com/benblack86/linkclump) as a userscript version
 
-> You may find that it doesn't work well on some websites, such as Github, if you use Safari's Tampermonkey extension. I still don't know why, but I found [Stay](https://github.com/shenruisi/Stay) to be effective. I wonder if this is because they request different permissions. I have reported this issue to Tampermonkey and any help with this matter would be appreciated.
-
 > If you use Chrome, original extension is recommended.
 
 ## How to use
